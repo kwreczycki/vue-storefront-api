@@ -1,4 +1,4 @@
-version: '3.0'
+version: '2'
 services:
   es1:
     container_name: elasticsearch
@@ -6,9 +6,18 @@ services:
     volumes:
       - ./docker/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
       - 'esdat1:/usr/share/elasticsearch/data'
+
+    networks:
+      default:
+        aliases:
+          - elasticsearch
+
+      vuestorefrontcoreshopapp_coreshop:
+
     ports:
       - '9200:9200'
       - '9300:9300'
+
     environment:
       ES_JAVA_OPTS: "-Xmx512m -Xms512m"
 
@@ -28,3 +37,7 @@ services:
 
 volumes:
   esdat1:
+
+networks:
+  vuestorefrontcoreshopapp_coreshop:
+    external: true
